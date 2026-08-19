@@ -6,31 +6,31 @@ using UnityEngine.UI;
 
 public class AudioController : MonoBehaviour
 {
-    [Header("Master Volume Settings")]
-    [SerializeField] string masterVolumeParameter = "MasterVolume";
-    [SerializeField] AudioMixer masterMixer;
-    [SerializeField] Slider masterSlider;
-    [SerializeField] float masterMultiplier = 30f;
-    [SerializeField] Toggle masterToggle;
+    [Header("Volume Settings")]
+    [SerializeField] string volumeParameter = "MasterVolume";
+    [SerializeField] AudioMixer mixer;
+    [SerializeField] Slider slider;
+    [SerializeField] float multiplier = 30f;
+    [SerializeField] Toggle toggle;
 
     private bool disableToggleEvent;
 
     private void Awake()
     {
-        masterSlider.onValueChanged.AddListener(HandleSliderValueChanged);
-        masterToggle.onValueChanged.AddListener(HandleToggleValueChanged);
+        slider.onValueChanged.AddListener(HandleSliderValueChanged);
+        toggle.onValueChanged.AddListener(HandleToggleValueChanged);
     }
 
     private void OnDisable()
     {
-        PlayerPrefs.SetFloat(masterVolumeParameter, masterSlider.value);
+        PlayerPrefs.SetFloat(volumeParameter, slider.value);
     }
 
     private void HandleSliderValueChanged(float value)
     {
-        masterMixer.SetFloat(masterVolumeParameter, Mathf.Log10(value) * masterMultiplier);
+        mixer.SetFloat(volumeParameter, Mathf.Log10(value) * multiplier);
         disableToggleEvent = true;
-        masterToggle.isOn = masterSlider.value > masterSlider.minValue;
+        toggle.isOn = slider.value > slider.minValue;
         disableToggleEvent = false;
     }
 
@@ -43,16 +43,16 @@ public class AudioController : MonoBehaviour
 
         if (enableSound)
         {
-            masterSlider.value = masterSlider.maxValue;
+            slider.value = slider.maxValue;
         }
         else
         {
-            masterSlider.value = masterSlider.minValue;
+            slider.value = slider.minValue;
         }
     }
 
     void Start()
     {
-        masterSlider.value = PlayerPrefs.GetFloat(masterVolumeParameter, masterSlider.value);
+        slider.value = PlayerPrefs.GetFloat(volumeParameter, slider.value);
     }
 }

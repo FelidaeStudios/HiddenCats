@@ -14,6 +14,7 @@ public class ObjectController : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = FindFirstObjectByType<GameManager>();
+        objectName = gameObject.name; // Set the objectName to the name of the GameObject.
     }
 
     private void OnMouseDown()
