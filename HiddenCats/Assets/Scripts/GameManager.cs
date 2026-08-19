@@ -7,10 +7,10 @@ public class GameManager : MonoBehaviour
 {
     // Stores persistent data across scenes
     // Objects found vs not found, hints used, time spent
-
+    public GameObject endScreen;
     public GameStateData currentData;
 
-    public static GameManager Instance;
+    /*public static GameManager Instance;
 
     private void Awake()
     {
@@ -23,20 +23,27 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+    }*/
 
     void Start()
     {
+        PlayerPrefs.DeleteKey(GameState.PlayerPrefsKeyName); // For testing purposes, remove this line in production
+        Debug.Log("GameObjects in scene with tag 'Object': " + GameObject.FindGameObjectsWithTag("Object").Length);
         var loadedState = GameState.LoadFromPlayerPrefs();
         if (loadedState != null)
         {
             currentData = loadedState;
             RestoreSceneState();
         }
-        /*else
+        else
         {
-            InitializeNewGame(); // Later implementation for starting a new game if no saved state exists
-        }*/
+            InitializeNewGame();
+        }
+    }
+
+    void Update()
+    {
+        EndGame();
     }
 
     public void MarkObjectAsFound(string objectName)
@@ -91,15 +98,64 @@ public class GameManager : MonoBehaviour
                 if (data.isFound)
                 {
                     controller.isFound = true;
-                    obj.GetComponent<SpriteRenderer>().sprite = controller.filledSprite;
+                    obj.GetComponent<SpriteRenderer>().sprite = controller.foundSprite;
+                }
+            }
+        }
+
+        Debug.Log("Game state restored from PlayerPrefs. Object array length: " + currentData.allObjects.Length);
+    }
+
+    void ResetSceneState()
+    {
+        GameObject[] allObjects = GameObject.FindGameObjectsWithTag("Object");
+
+        foreach (GameObject obj in allObjects)
+        {
+            var controller = obj.GetComponent<ObjectController>();
+            if (controller != null)
+            {
+                controller.isFound = false;
+                if (controller.hiddenSprite != null)
+                {
+                    obj.GetComponent<SpriteRenderer>().sprite = controller.hiddenSprite;
                 }
             }
         }
     }
 
-    void InitializeNewGame()
+    public void InitializeNewGame()
     {
-        // Initialize currentData with default values for a new game
-        // This could involve setting up the list of objects, their initial states, etc.
+        // Initialize currentData with all objects in the scene using names, positions, and isFound = false.
+        GameObject[] allObjects = GameObject.FindGameObjectsWithTag("Object");
+
+        currentData = new GameStateData();
+        currentData.allObjects = new ObjectData[allObjects.Length];
+
+        for (int i = 0; i < allObjects.Length; i++)
+        {
+            GameObject obj = allObjects[i];
+            ObjectData objectData = new ObjectData();
+            objectData.objectName = obj.name;
+            objectData.position = obj.transform.position;
+            objectData.rotation = obj.transform.rotation;
+            objectData.isFound = false; // All objects are initially not found
+            currentData.allObjects[i] = objectData;
+        }
+        ResetSceneState();
+        SaveGameState();
+
+        Debug.Log("No save found. New game initialized. Object array length: " + currentData.allObjects.Length);
+    }
+
+    void EndGame()
+    {
+        if (currentData.allObjects != null && currentData.allObjects.Length > 0 && Array.TrueForAll(currentData.allObjects, obj => obj.isFound == true))
+        {
+            endScreen.SetActive(true);
+            Time.timeScale = 0f; // Pause the game
+            Debug.Log("All objects found! Game Over!");
+            // Implement end game logic here, such as showing a victory screen or resetting the game.
+        }
     }
 }

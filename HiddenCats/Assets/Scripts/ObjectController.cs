@@ -4,7 +4,8 @@ public class ObjectController : MonoBehaviour
 {
     // Changes object sprites from outline to filled in when clicked.
     private SpriteRenderer spriteRenderer;
-    public Sprite filledSprite;
+    public Sprite foundSprite;
+    public Sprite hiddenSprite;
     public bool isFound;
     public string objectName;
 
@@ -19,13 +20,12 @@ public class ObjectController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("Object clicked: " + gameObject.name);
+        //Debug.Log("Object clicked: " + gameObject.name);
         // Check that object tag is accurate, change sprite to filled in sprite, update GameManager to reflect found object in list of objects.
         if (gameObject.CompareTag("Object"))
         {
             OnObjectFound();
-            Debug.Log("Object status: " + isFound);
-            // Update GameManager list of objects.
+            //Debug.Log("Object status: " + isFound);
         }
     }
 
@@ -38,7 +38,7 @@ public class ObjectController : MonoBehaviour
 
             if (!isFound)
             {
-                spriteRenderer.sprite = filledSprite;
+                spriteRenderer.sprite = foundSprite;
                 isFound = true;
                 gameManager.MarkObjectAsFound(objectName);
             }

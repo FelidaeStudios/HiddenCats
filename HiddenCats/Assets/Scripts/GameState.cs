@@ -38,6 +38,17 @@ public class GameState : MonoBehaviour
             objectData.isFound = false; // Assuming hidden objects are not found yet
             gameStateData.allObjects[i] = objectData;
         }
+
+        for (int i = 0; i < foundObjects.Length; i++)
+        {
+            GameObject obj = foundObjects[i];
+            ObjectData objectData = new ObjectData();
+            objectData.objectName = obj.name;
+            objectData.position = obj.transform.position;
+            objectData.rotation = obj.transform.rotation;
+            objectData.isFound = true; // Assuming found objects are already found
+            gameStateData.allObjects[hiddenObjects.Length + i] = objectData;
+        }
         
         string json = JsonUtility.ToJson(gameStateData);
 
