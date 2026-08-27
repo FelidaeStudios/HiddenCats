@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
     // Objects found vs not found, hints used, time spent
     public GameObject endScreen;
     public GameStateData currentData;
+    private UIController uiController;
 
-    /*public static GameManager Instance;
+    public static GameManager Instance;
 
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }*/
+    }
 
     void Start()
     {
@@ -156,6 +157,35 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f; // Pause the game
             Debug.Log("All objects found! Game Over!");
             // Implement end game logic here, such as showing a victory screen or resetting the game.
+        }
+    }
+
+    public int GetTotalObjectCount()
+    {
+        if (currentData.allObjects != null)
+        {
+            Debug.Log("Total objects in scene: " + currentData.allObjects.Length);
+            return currentData.allObjects.Length;
+        }
+        else
+        {
+            Debug.Log("No objects found in the current game state.");
+            return 0;
+        }
+    }
+
+    public int GetFoundObjectCount()
+    {
+        if (currentData.allObjects != null)
+        {
+            int foundCount = Array.FindAll(currentData.allObjects, obj => obj.isFound).Length;
+            Debug.Log("Found objects count: " + foundCount);
+            return foundCount;
+        }
+        else
+        {
+            Debug.Log("No objects found in the current game state.");
+            return 0;
         }
     }
 }

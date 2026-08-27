@@ -4,8 +4,8 @@ public class ObjectController : MonoBehaviour
 {
     // Changes object sprites from outline to filled in when clicked.
     private SpriteRenderer spriteRenderer;
-    public Sprite foundSprite;
     public Sprite hiddenSprite;
+    public Sprite foundSprite;
     public bool isFound;
     public string objectName;
 
@@ -33,12 +33,15 @@ public class ObjectController : MonoBehaviour
     {
         if (isFound)
             {
+                Debug.Log("Object already found: " + objectName);
                 return;
             }
 
             if (!isFound)
             {
-                spriteRenderer.sprite = foundSprite;
+                Debug.Log("Object found: " + objectName);
+                spriteRenderer.color = Color.magenta; // Remove once all foundSprite objects are finished
+                //spriteRenderer.sprite = foundSprite;
                 isFound = true;
                 gameManager.MarkObjectAsFound(objectName);
             }

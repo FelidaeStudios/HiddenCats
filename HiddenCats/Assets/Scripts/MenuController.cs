@@ -4,9 +4,10 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
     public GameObject settingsMenu;
+    [SerializeField] private string nextSceneName;
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene(nextSceneName);
     }
 
     public void Credits()

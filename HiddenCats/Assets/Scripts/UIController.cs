@@ -2,12 +2,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
     public GameObject hintButton;
     public GameObject settingsButton;
     public GameObject settingsMenu;
+    public TMP_Text countText;
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        DisplayCount();
+    }
 
     public void ToggleSettings()
     {
@@ -47,5 +59,11 @@ public class UIController : MonoBehaviour
     {
         Debug.Log("Quit Game");
         Application.Quit();
+    }
+
+    public void DisplayCount()
+    {
+        // Update countText with number of found versus total objects.
+        countText.GetComponent<TMP_Text>().text = GameManager.Instance.GetFoundObjectCount() + " / " + GameManager.Instance.GetTotalObjectCount();
     }
 }
