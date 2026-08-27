@@ -164,12 +164,12 @@ public class GameManager : MonoBehaviour
     {
         if (currentData.allObjects != null)
         {
-            Debug.Log("Total objects in scene: " + currentData.allObjects.Length);
+            //Debug.Log("Total objects in scene: " + currentData.allObjects.Length);
             return currentData.allObjects.Length;
         }
         else
         {
-            Debug.Log("No objects found in the current game state.");
+            //Debug.Log("No objects found in the current game state.");
             return 0;
         }
     }
@@ -179,12 +179,12 @@ public class GameManager : MonoBehaviour
         if (currentData.allObjects != null)
         {
             int foundCount = Array.FindAll(currentData.allObjects, obj => obj.isFound).Length;
-            Debug.Log("Found objects count: " + foundCount);
+            //Debug.Log("Found objects count: " + foundCount);
             return foundCount;
         }
         else
         {
-            Debug.Log("No objects found in the current game state.");
+            //Debug.Log("No objects found in the current game state.");
             return 0;
         }
     }
