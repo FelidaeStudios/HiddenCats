@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    private void Awake()
+    /*private void Awake()
     {
         if (Instance == null)
         {
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+    }*/
 
     void Start()
     {
