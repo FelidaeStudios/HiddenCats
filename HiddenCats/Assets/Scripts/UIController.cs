@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        DisplayCount();
+        //DisplayCount();
     }
 
     public void ToggleSettings()
@@ -61,9 +61,9 @@ public class UIController : MonoBehaviour
         Application.Quit();
     }
 
-    public void DisplayCount()
+    /*public void DisplayCount()
     {
         // Update countText with number of found versus total objects.
-        countText.GetComponent<TMP_Text>().text = GameManager.Instance.GetFoundObjectCount() + " / " + GameManager.Instance.GetTotalObjectCount();
-    }
+        countText.GetComponent<TMP_Text>().text = GameManager.GetFoundObjectCount() + " / " + GameManager.GetTotalObjectCount();
+    }*/
 }

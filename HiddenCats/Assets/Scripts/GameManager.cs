@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     // Stores persistent data across scenes
     // Objects found vs not found, hints used, time spent
     public GameObject endScreen;
+    public TMP_Text currentText;
     public GameStateData currentData;
     private UIController uiController;
 
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        UpdateObjectLists();
         EndGame();
     }
 
@@ -79,6 +82,7 @@ public class GameManager : MonoBehaviour
         var found = System.Array.FindAll(currentData.allObjects, obj => obj.isFound);
 
         // Pass info to UI
+        currentText.text = found.Length + " / " + currentData.allObjects.Length;
     }
 
     void SaveGameState()
